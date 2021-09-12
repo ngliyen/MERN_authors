@@ -26,7 +26,12 @@ const Dashboard = () => {
   // }
 
   const deleteAuthor = (authorId) => {
-    setAuthors(authors.filter(author => author._id !== authorId));
+    axios.delete("http://localhost:8000/api/authors/" + authorId)
+      .then(res => {
+        console.log(authorId, " deleted");
+        setAuthors(authors.filter(author => author._id !== authorId));
+      })
+      .catch(err => console.log(err));
   }
 
   // const addProduct = (productObj) => {
@@ -46,17 +51,19 @@ const Dashboard = () => {
                 <th>Actions available</th>
               </tr>
             </thead>
+            <tbody>
             {authors.map((author, idx) => {
               return(
                 <tr key={idx}>
                   <td>{author.name}</td>
-                  <td>
+                  <td className="d-flex gap-2 justify-content-center">
                     <Link className="btn btn-outline-secondary" to={"/edit/"+author._id}>Edit</Link>
-                    <button type="button" className="btn btn-outline-secondary m-1" onClick={() => {deleteAuthor(author._id)}}>Delete</button>
+                    <button type="button" className="btn btn-outline-secondary" onClick={() => {deleteAuthor(author._id)}}>Delete</button>
                   </td>
                 </tr>
               )
             })}
+            </tbody>
           </table>
         </div>: ""}
     </div>
