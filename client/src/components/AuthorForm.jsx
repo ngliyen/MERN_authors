@@ -21,8 +21,8 @@ const ProductForm = (props) => {
           <input className="form-control w-100" type="text" onChange={(e) => setName(e.target.value)} name="name" value={name}/>
         </p>
         <div>
+          <button className="btn btn-dark" type="submit">Submit</button> &nbsp;&nbsp;&nbsp;&nbsp;
           <Link to="/" className="btn btn-dark">Cancel</Link>
-          <button className="btn btn-dark" type="submit">Submit</button>
         </div>
       </form>
     </div>

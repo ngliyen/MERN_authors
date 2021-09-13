@@ -23,20 +23,17 @@ const UpdateProduct = (props) => {
     console.log(id, author);
     axios.put("http://localhost:8000/api/authors/" + id, author)
       .then(res => {
-        console.log(res)
-        if(res.data.errors){
-          const errorResponse = res.data.errors;
-          const errorArr = [];
-          for (const key of Object.keys(errorResponse)) {
-            errorArr.push(errorResponse[key].message)
-            setErrors(errorArr);
-          }
-        } else{
+        console.log("Update successful", res)
         history.push("/");
-        }
       })
       .catch(err => {
-        console.log(err);
+        console.log("Update Unsuccessful", err.response.data);
+        const errorResponse = err.response.data.errors;
+        const errorArr = [];
+        for (const key of Object.keys(errorResponse)) {
+          errorArr.push(errorResponse[key].message)
+        }
+        setErrors(errorArr);
       })
     
   }

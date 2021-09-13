@@ -11,7 +11,7 @@ const AddAuthor = (props) => {
   const createAuthor = (author) => {
     axios.post("http://localhost:8000/api/authors", author)
       .then(res => {
-        console.log(res.data)
+        // console.log(res.data)
         history.push("/");
       }) // later redirect to the new page
       .catch(err => {
@@ -20,9 +20,9 @@ const AddAuthor = (props) => {
         const errorArr = [];
         for (const key of Object.keys(errorResponse)) {
           errorArr.push(errorResponse[key].message)
-          setErrors(errorArr);
         }
-      }, [])
+        setErrors(errorArr);
+      })
   }
 
   return(
