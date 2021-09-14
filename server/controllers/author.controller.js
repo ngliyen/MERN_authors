@@ -16,7 +16,7 @@ module.exports.createAuthor = (req,res) => {
 }
 
 module.exports.getAllAuthors = (req,res) => {
-  Author.find({})
+  Author.find({}).sort({name:1})
     .then(authors => res.json(authors))
     .catch(err => res.json(err));
 }
@@ -24,7 +24,7 @@ module.exports.getAllAuthors = (req,res) => {
 module.exports.getAuthorById = (req, res) => {
   Author.findOne({_id:req.params.id})
     .then(author => res.json(author))
-    .catch(err => response.json(err))
+    .catch(err => res.status(400).json(err))
 }
 
 module.exports.updateAuthor = (req,res) => {

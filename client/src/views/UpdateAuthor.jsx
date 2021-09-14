@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import {useParams, useHistory} from "react-router-dom";
+import {useParams, useHistory, Link} from "react-router-dom";
 import AuthorForm from '../components/AuthorForm';
 
 const UpdateProduct = (props) => {
@@ -8,6 +8,7 @@ const UpdateProduct = (props) => {
   const [name, setName] = useState();
   const [loaded, setLoaded] = useState(false);
   const [errors, setErrors] = useState([]);
+  const [exist, setExist] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -16,6 +17,12 @@ const UpdateProduct = (props) => {
         console.log("Name:", res.data.name);
         setName(res.data.name);
         setLoaded(true);
+        setExist(true);
+      })
+      .catch(err => {
+        console.log("Id does not exists");
+        setLoaded(true);
+        console.log("Loaded", loaded, "Exist", exist)
       })
   }, [id])
 
@@ -40,7 +47,13 @@ const UpdateProduct = (props) => {
   
   return(
     <div>
-      {loaded && <AuthorForm initialName={name} onSubmitProp={updateAuthor} errors={errors} />}
+      {(loaded && !exist) ? 
+      <div>
+        <p>We're sorry, but we could not find the author you are looking for. Would you like to add this author to our database?</p>
+        <Link to="/new">Add an author</Link>
+      </div>: null}
+      {loaded && exist && <AuthorForm initialName={name} onSubmitProp={updateAuthor} errors={errors} />}
+
     </div>
   )
 }
